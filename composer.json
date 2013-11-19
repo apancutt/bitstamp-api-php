@@ -3,6 +3,11 @@
     "description": "PHP library for the Bitstamp API",
     "license": "MIT",
     "type": "library",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
     "autoload": {
         "psr-0" : {
             "Bitstamp\\Api\\": "src/lib/"
