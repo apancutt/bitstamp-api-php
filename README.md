@@ -29,6 +29,10 @@ you will also need to add:
         {
             "type": "vcs",
             "url": "git@github.com:apancutt/bitstamp-api.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:panadas/module-logger.git"
         }
     ]
 

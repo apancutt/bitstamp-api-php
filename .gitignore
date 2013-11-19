@@ -1,6 +1,5 @@
 .DS_Store
 /.buildpath
-/.elasticbeanstalk
 /.project
 /.settings/
 /composer.lock
