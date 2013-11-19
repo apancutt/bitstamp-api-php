@@ -228,7 +228,7 @@ class Client
         $data["key"] = $this->getApiKey();
         $data["signature"] = $this->calculateSignature();
 
-        return $this->send(\Bitstamp\Api\HttpRequest::METHOD_POST, $endpoint::URI, $data, $headers);
+        return $this->send(\Bitstamp\Api\HttpRequest::METHOD_POST, $endpoint::URI, $data);
     }
 
     /**
