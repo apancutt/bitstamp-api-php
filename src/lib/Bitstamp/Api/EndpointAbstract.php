@@ -6,8 +6,7 @@ abstract class EndpointAbstract
 
     private $client;
 
-    // The URI must be configured by the endpoint
-    const URI = null;
+    const URI = null; // The URI must be configured by the endpoint
 
     /**
      * Execute the endpoint and handles the response. The returned value depends on the implementation of the endpoint.
@@ -47,24 +46,22 @@ abstract class EndpointAbstract
      * Shorthand method for executing a GET request on the client.
      *
      * @param  array $data
-     * @param  array $headers
      * @return \Bitstamp\Api\HttpResponse
      */
-    protected function get(array $data = [], array $headers = [])
+    protected function get(array $data = [])
     {
-        return $this->getClient()->get($this, $data, $headers);
+        return $this->getClient()->get($this, $data);
     }
 
     /**
      * Shorthand method for executing a POST request on the client.
      *
      * @param  array $data
-     * @param  array $headers
      * @return \Bitstamp\Api\HttpResponse
      */
-    protected function post(array $data = [], array $headers = [])
+    protected function post(array $data = [])
     {
-        return $this->getClient()->post($this, $data, $headers);
+        return $this->getClient()->post($this, $data);
     }
 
 }

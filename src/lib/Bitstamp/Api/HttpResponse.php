@@ -9,48 +9,14 @@ class HttpResponse
     private $body;
 
     /**
-     * @param resource $curl
-     * @param string   $response
-     **/
-    public function __construct($curl, $response)
+     * @param integer $status_code
+     * @param array   $headers
+     * @param string  $body
+     */
+    public function __construct($status_code = 200, array $headers = [], $body = null)
     {
-        $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $headers = [];
-        $body = null;
-
-        list($raw_headers, $raw_body) = preg_split("/(\r?\n){2}/", $response, 2);
-
-        foreach (preg_split("/\r?\n/", $raw_headers) as $header) {
-
-            if (substr_count($header, ":") == 0) {
-                continue;
-            }
-
-            list($name, $value) = preg_split("/\s*:\s*/", $header, 2);
-            $headers[$name] = $value;
-
-        }
-
-        $raw_body = trim($raw_body);
-        if (mb_strlen($raw_body) > 0) {
-
-            $content_type = mb_strtolower(trim(explode(";", curl_getinfo($curl, CURLINFO_CONTENT_TYPE), 2)[0]));
-
-            switch ($content_type) {
-
-            	case "application/json":
-            	    $body = json_decode($raw_body, true);
-            	    break;
-
-            	default:
-                    $body = $raw_body;
-
-            }
-
-        }
-
         $this
-            ->setStatusCode(curl_getinfo($curl, CURLINFO_HTTP_CODE))
+            ->setStatusCode($status_code)
             ->setAllHeaders($headers)
             ->setBody($body);
     }

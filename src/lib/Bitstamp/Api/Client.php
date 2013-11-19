@@ -4,6 +4,7 @@ namespace Bitstamp\Api;
 class Client
 {
 
+    private $logger;
     private $client_id;
     private $api_secret;
     private $api_key;
@@ -13,17 +14,63 @@ class Client
     const ENDPOINT_BASE_URI = "https://www.bitstamp.net/api";
 
     /**
-     * @param string $client_id
-     * @param string $api_secret
-     * @param string $api_key
+     * @param string                        $client_id
+     * @param string                        $api_secret
+     * @param string                        $api_key
+     * @param \Bitstamp\Api\LoggerInterface $logger
      */
-    public function __construct($client_id, $api_secret, $api_key)
+    public function __construct($client_id, $api_secret, $api_key, \Bitstamp\Api\LoggerInterface $logger)
     {
         $this
             ->setClientId($client_id)
             ->setApiSecret($api_secret)
             ->setApiKey($api_key)
             ->setNonce(static::createNonce());
+
+        if (null !== $logger) {
+            $this->setLogger($logger);
+
+            $logger->debug("Bitstamp client has been configured:");
+            $logger->debug("     Client ID: {$this->getClientId()}");
+            $logger->debug("     API Secret: <hidden>");
+            $logger->debug("     API Key: {$this->getApiKey()}");
+            $logger->debug("     Nonce: {$this->getNonce()}");
+        }
+    }
+
+    /**
+     * @return \Bitstamp\Api\LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasLogger()
+    {
+        return (null !== $this->getLogger());
+    }
+
+    /**
+     * @param  \Bitstamp\Api\LoggerInterface $logger
+     * @return \Bitstamp\Api\Client
+     */
+    protected function setLogger(\Bitstamp\Api\LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+    /**
+     * @return \Bitstamp\Api\Client
+     */
+    protected function removeLogger()
+    {
+        return $this->setLogger(null);
     }
 
     /**
@@ -125,22 +172,13 @@ class Client
      * @param  string $method
      * @param  string $uri
      * @param  array $data
-     * @param  array $headers
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @return \Bitstamp\Api\HttpResponse
      */
-    protected function send($method, $uri, array $data = [], array $headers = [])
+    protected function send($method, $uri, array $data = [])
     {
         $uri = (static::ENDPOINT_BASE_URI . $uri);
-
-        $options[CURLOPT_USERAGENT] = sprintf(
-            "Mozilla/4.0 (compatible; BtcTrader/%s; %s; PHP/%s)", static::VERSION, php_uname("s"), phpversion()
-        );
-
-        $options[CURLOPT_USERAGENT] = "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)";
-
-        echo "[INFO] Sending HTTP {$method} request to: {$uri}\n";
 
         foreach ($data as $name => $value) {
             if (null === $value) {
@@ -148,7 +186,15 @@ class Client
             }
         }
 
-        $http_response = (new \Bitstamp\Api\HttpRequest())->send($method, $uri, $data, $headers, $options);
+        $options = [
+            CURLOPT_USERAGENT => sprintf(
+                "Mozilla/4.0 (compatible; BtcTrader/%s; %s; PHP/%s)", static::VERSION, php_uname("s"), phpversion()
+            )
+        ];
+
+        $http_request = new \Bitstamp\Api\HttpRequest($this->getLogger());
+
+        $http_response = $http_request->send($method, $uri, $data, [], $options);
 
         if ($http_response->isError()) {
             throw new \RuntimeException("HTTP error status received: {$http_response->getStatusCode()}");
@@ -162,12 +208,11 @@ class Client
      *
      * @param  \Bitstamp\Api\EndpointAbstract $endpoint
      * @param  array $data
-     * @param  array $headers
      * @return \Bitstamp\Api\HttpResponse
      */
-    public function get(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [], array $headers = [])
+    public function get(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
     {
-        return $this->send(\Bitstamp\Api\HttpRequest::METHOD_GET, $endpoint::URI, $data, $headers);
+        return $this->send(\Bitstamp\Api\HttpRequest::METHOD_GET, $endpoint::URI, $data);
     }
 
     /**
@@ -175,10 +220,9 @@ class Client
      *
      * @param  \Bitstamp\Api\EndpointAbstract $endpoint
      * @param  array $data
-     * @param  array $headers
      * @return \Bitstamp\Api\HttpResponse
      */
-    public function post(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [], array $headers = [])
+    public function post(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
     {
         $data["nonce"] = $this->getNonce();
         $data["key"] = $this->getApiKey();
