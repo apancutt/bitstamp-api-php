@@ -28,7 +28,7 @@ you will also need to add:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/apancutt/bitstamp-api.git"
+            "url": "git@github.com:apancutt/bitstamp-api.git"
         }
     ]
 
