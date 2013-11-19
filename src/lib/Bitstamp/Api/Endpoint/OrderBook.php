@@ -6,16 +6,16 @@ class OrderBook extends \Bitstamp\Api\EndpointAbstract
 
     const URI = "/order_book/";
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute($group = true)
     {
         $data = [
 	        "group" => ($group ? 1 : 0)
         ];
 
-        $response = $this->get($data);
-
-        print_r($response);
-        exit;
+        return $this->get($data)->getBody();
     }
 
 }

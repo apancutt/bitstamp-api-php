@@ -4,6 +4,9 @@ namespace Bitstamp\Api\Endpoint;
 abstract class LimitOrderAbstract extends \Bitstamp\Api\EndpointAbstract
 {
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute($amount = null, $price = null)
     {
         $data = [
@@ -11,10 +14,7 @@ abstract class LimitOrderAbstract extends \Bitstamp\Api\EndpointAbstract
 	        "price" => $price
         ];
 
-        $response = $this->post($data);
-
-        print_r($response);
-        exit;
+        return $this->post($data)->getBody();
     }
 
 }

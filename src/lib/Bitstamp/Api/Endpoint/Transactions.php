@@ -10,16 +10,16 @@ class Transactions extends \Bitstamp\Api\EndpointAbstract
     const TIME_MINUTE = "minute";
     const TIME_DEFAULT = self::TIME_HOUR;
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute($time = self::TIME_DEFAULT)
     {
         $data = [
 	        "time" => $time
         ];
 
-        $response = $this->get($data);
-
-        print_r($response);
-        exit;
+        return $this->get($data)->getBody();
     }
 
 }

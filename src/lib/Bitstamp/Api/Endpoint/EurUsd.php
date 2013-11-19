@@ -6,12 +6,12 @@ class EurUsd extends \Bitstamp\Api\EndpointAbstract
 
     const URI = "/eur_usd/";
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute()
     {
-        $response = $this->get();
-
-        print_r($response);
-        exit;
+        return $this->get()->getBody();
     }
 
 }

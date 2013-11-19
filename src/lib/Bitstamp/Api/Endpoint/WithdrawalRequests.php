@@ -6,12 +6,12 @@ class UserTransactions extends \Bitstamp\Api\EndpointAbstract
 
     const URI = "/withdrawal_requests/";
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute()
     {
-        $response = $this->post();
-
-        print_r($response);
-        exit;
+        return $this->post()->getBody();
     }
 
 }

@@ -6,16 +6,16 @@ class CancelOrder extends \Bitstamp\Api\EndpointAbstract
 
     const URI = "/cancel_order/";
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute($id = null)
     {
         $data = [
 	        "id" => $id
         ];
 
-        $response = $this->post($data);
-
-        print_r($response);
-        exit;
+        return $this->post($data)->getBody();
     }
 
 }

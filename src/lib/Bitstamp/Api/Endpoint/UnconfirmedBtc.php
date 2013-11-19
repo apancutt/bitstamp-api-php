@@ -6,12 +6,12 @@ class UnconfirmedBtc extends \Bitstamp\Api\EndpointAbstract
 
     const URI = "/unconfirmed_btc/";
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute()
     {
-        $response = $this->post();
-
-        print_r($response);
-        exit;
+        return $this->post()->getBody();
     }
 
 }

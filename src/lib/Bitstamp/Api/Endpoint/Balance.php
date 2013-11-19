@@ -6,12 +6,12 @@ class Balance extends \Bitstamp\Api\EndpointAbstract
 
     const URI = "/balance/";
 
+    /**
+     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     */
     public function execute()
     {
-        $response = $this->post();
-
-        print_r($response);
-        exit;
+        return $this->post()->getBody();
     }
 
 }
