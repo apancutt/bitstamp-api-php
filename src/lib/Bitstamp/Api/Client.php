@@ -19,7 +19,7 @@ class Client
      * @param string                        $api_key
      * @param \Bitstamp\Api\LoggerInterface $logger
      */
-    public function __construct($client_id, $api_secret, $api_key, \Bitstamp\Api\LoggerInterface $logger)
+    public function __construct($client_id, $api_secret, $api_key, \Bitstamp\Api\LoggerInterface $logger = null)
     {
         $this
             ->setClientId($client_id)
