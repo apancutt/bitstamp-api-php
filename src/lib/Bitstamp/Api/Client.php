@@ -169,16 +169,16 @@ class Client
     /**
      * Executes an HTTP request on an API endpoint.
      *
-     * @param  string $method
-     * @param  string $uri
-     * @param  array $data
+     * @param  \Bitstamp\Api\EndpointAbstract $endpoint
+     * @param  string                         $method
+     * @param  array                          $data
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @return \Bitstamp\Api\HttpResponse
      */
-    protected function send($method, $uri, array $data = [])
+    protected function send(\Bitstamp\Api\EndpointAbstract $endpoint, $method, array $data = [])
     {
-        $uri = (static::ENDPOINT_BASE_URI . $uri);
+        $uri = (static::ENDPOINT_BASE_URI . $endpoint::URI);
 
         foreach ($data as $name => $value) {
             if (null === $value) {
@@ -212,7 +212,7 @@ class Client
      */
     public function get(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
     {
-        return $this->send(\Bitstamp\Api\HttpRequest::METHOD_GET, $endpoint::URI, $data);
+        return $this->send($endpoint, \Bitstamp\Api\HttpRequest::METHOD_GET, $data);
     }
 
     /**
@@ -228,7 +228,7 @@ class Client
         $data["key"] = $this->getApiKey();
         $data["signature"] = $this->calculateSignature();
 
-        return $this->send(\Bitstamp\Api\HttpRequest::METHOD_POST, $endpoint::URI, $data);
+        return $this->send($endpoint, \Bitstamp\Api\HttpRequest::METHOD_POST, $data);
     }
 
     /**
