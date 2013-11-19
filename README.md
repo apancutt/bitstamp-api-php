@@ -21,9 +21,16 @@ Add the following dependency to your `composer.json` file:
         "apancutt/bitstamp-api": "1.0.*"
     }
 
-Note that this library is currently under development so you will also need to add:
+Note that this library is currently under development and not part of Packagist so
+you will also need to add:
 
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/apancutt/bitstamp-api.git"
+        }
+    ]
 
 ### Alternative Installation ###
 
