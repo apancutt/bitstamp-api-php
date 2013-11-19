@@ -1,0 +1,8 @@
+.DS_Store
+/.buildpath
+/.elasticbeanstalk
+/.project
+/.settings/
+/composer.lock
+/composer.phar
+/vendor/
