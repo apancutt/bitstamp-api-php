@@ -37,7 +37,7 @@ class Client
             $logger
                 ->debug("Bitstamp client has been configured:")
                 ->debug("     Client ID: {$this->getClientId()}")
-                ->debug("     API Secret: <hidden>")
+                ->debug("     API Secret: " . \Panadas\Util\String::mask($this->getApiSecret(), true))
                 ->debug("     API Key: {$this->getApiKey()}");
         }
     }
