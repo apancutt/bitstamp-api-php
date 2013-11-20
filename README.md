@@ -14,6 +14,7 @@ Requirements
  * PHP >= 5.4
  * ext-curl
  * ext-json (PHP >= 5.5)
+ * ext-mcrypt
 
 Installation
 ------------
