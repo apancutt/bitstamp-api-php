@@ -1,6 +1,6 @@
 {
     "name": "apancutt/bitstamp-api",
-    "description": "PHP library for the Bitstamp API",
+    "description": "PHP library for the Bitstamp API.",
     "license": "MIT",
     "type": "library",
     "require": {
