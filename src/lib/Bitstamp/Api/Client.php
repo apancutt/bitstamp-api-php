@@ -8,7 +8,6 @@ class Client
     private $client_id;
     private $api_secret;
     private $api_key;
-    private $nonce;
 
     const VERSION = "0.0.1";
     const ENDPOINT_BASE_URI = "https://www.bitstamp.net/api";
@@ -24,8 +23,7 @@ class Client
         $this
             ->setClientId($client_id)
             ->setApiSecret($api_secret)
-            ->setApiKey($api_key)
-            ->setNonce(static::createNonce());
+            ->setApiKey($api_key);
 
         if (null !== $logger) {
             $this->setLogger($logger);
@@ -34,7 +32,6 @@ class Client
             $logger->debug("     Client ID: {$this->getClientId()}");
             $logger->debug("     API Secret: <hidden>");
             $logger->debug("     API Key: {$this->getApiKey()}");
-            $logger->debug("     Nonce: {$this->getNonce()}");
         }
     }
 
@@ -131,34 +128,16 @@ class Client
     }
 
     /**
-     * @return integer
-     */
-    public function getNonce()
-    {
-        return $this->nonce;
-    }
-
-    /**
-     * @param  integer $nonce
-     * @return \Bitstamp\Api\Client
-     */
-    protected function setNonce($nonce)
-    {
-        $this->nonce = (int) $nonce;
-
-        return $this;
-    }
-
-    /**
      * Calculates a security signature for authenticating request to the API endpoints.
      *
+     * @param  integer $nonce
      * @return string
      */
-    protected function calculateSignature()
+    protected function calculateSignature($nonce)
     {
         $signature = hash_hmac(
             "sha256",
-            ($this->getNonce() . $this->getClientId() . $this->getApiKey()),
+            ($nonce . $this->getClientId() . $this->getApiKey()),
             $this->getApiSecret(),
             false
         );
@@ -224,9 +203,9 @@ class Client
      */
     public function post(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
     {
-        $data["nonce"] = $this->getNonce();
+        $data["nonce"] = static::createNonce();
         $data["key"] = $this->getApiKey();
-        $data["signature"] = $this->calculateSignature();
+        $data["signature"] = $this->calculateSignature($data["nonce"]);
 
         return $this->send($endpoint, \Bitstamp\Api\HttpRequest::METHOD_POST, $data);
     }
@@ -238,7 +217,7 @@ class Client
      */
     protected static function createNonce()
     {
-        return time();
+        return round(microtime(true) * 1000);
     }
 
 }
