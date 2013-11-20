@@ -39,12 +39,6 @@ Note that **this library is currently under development** and not part of Packag
         }
     ]
 
-### Alternative Installation ###
-
-[Download](https://github.com/apancutt/bitstamp-api/archive/master.zip) or
-[clone the repository](https://github.com/apancutt/bitstamp-api/) into your project. You will need to implement your own
-autoloader.
-
 Example Usage
 -------------
 
