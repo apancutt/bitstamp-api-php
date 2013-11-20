@@ -3,6 +3,11 @@ Bitstamp API (PHP)
 
 A PHP implementation for accessing the [Bitstamp API](https://www.bitstamp.net/api/).
 
+WARNING: The Bitstamp API allows you to perform live transactions. This library is provided as-is to use, free of
+charge, and I will aim to keep it up to date. However, please remember that I will take no responsibility for the
+integrity or reliability of this library and will not be responsible for any damage or loss of earnings caused by the
+use of this library. Use at your own will.
+
 Requirements
 ------------
 
@@ -21,23 +26,9 @@ Add the following dependency to your `composer.json` file:
         "apancutt/bitstamp-api": "1.0.*"
     }
 
-Note that **this library is currently under development** and not part of Packagist so you will also need to add:
+Note that **this library is currently under development** so you will also need to add:
 
-    "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:apancutt/bitstamp-api.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:panadas/module-httpclient.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:panadas/module-logger.git"
-        }
-    ]
+    "minimum-stability": "dev"
 
 Example Usage
 -------------
