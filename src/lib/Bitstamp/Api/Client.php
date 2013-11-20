@@ -163,7 +163,7 @@ class Client
             }
         }
 
-        $response = $this->getRequest()->send($method, $uri, $data, [], $options);
+        $response = $this->getRequest()->send($method, $uri, $data, []);
 
         if ($response->isError()) {
             throw new \RuntimeException("HTTP error status received: {$response->getStatusCode()}");
@@ -181,7 +181,9 @@ class Client
      */
     public function get(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
     {
-        return $this->send($endpoint, \Bitstamp\Api\HttpRequest::METHOD_GET, $data);
+        $request = $this->getRequest();
+
+        return $this->send($endpoint, $request::METHOD_GET, $data);
     }
 
     /**
@@ -197,7 +199,9 @@ class Client
         $data["key"] = $this->getApiKey();
         $data["signature"] = $this->calculateSignature($data["nonce"]);
 
-        return $this->send($endpoint, \Bitstamp\Api\HttpRequest::METHOD_POST, $data);
+        $request = $this->getRequest();
+
+        return $this->send($endpoint, $request::METHOD_POST, $data);
     }
 
     /**
