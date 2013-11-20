@@ -3,10 +3,10 @@ Bitstamp API (PHP)
 
 A PHP implementation for accessing the [Bitstamp API](https://www.bitstamp.net/api/).
 
-WARNING: The Bitstamp API allows you to perform live transactions. This library is provided as-is to use, free of
-charge, and I will aim to keep it up to date. However, please remember that I will take no responsibility for the
-integrity or reliability of this library and will not be responsible for any damage or loss of earnings caused by the
-use of this library. Use at your own will.
+WARNING: The Bitstamp API allows you to perform live transactions. This library is provided as-is, to use free of
+charge, and I will aim to keep it up-to-date with API changes. However, please remember that I will take no
+responsibility for the integrity or reliability of this library and will not be responsible for any damage or loss of
+earnings caused by the use of this library. Use at your own will.
 
 Requirements
 ------------
