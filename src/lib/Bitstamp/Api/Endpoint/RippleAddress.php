@@ -1,7 +1,7 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class BitcoinAddress extends \Bitstamp\Api\EndpointAbstract
+class RippleAddress extends \Bitstamp\Api\EndpointAbstract
 {
 
     const URI = "/ripple_address/";
@@ -11,7 +11,7 @@ class BitcoinAddress extends \Bitstamp\Api\EndpointAbstract
      */
     public function execute()
     {
-        return $this->post()->getBody();
+        return $this->getClient()->post($this)->getBody();
     }
 
 }

@@ -11,7 +11,8 @@ class OpenOrders extends \Bitstamp\Api\EndpointAbstract
      */
     public function execute()
     {
-        return $this->post()->getBody();
+        // TODO: create property for orders
+        return $this->getClient()->post($this)->getBody();
     }
 
 }

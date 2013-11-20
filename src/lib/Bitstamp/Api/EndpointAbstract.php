@@ -43,25 +43,20 @@ abstract class EndpointAbstract
     }
 
     /**
-     * Shorthand method for executing a GET request on the client.
+     * Shorthand method for retrieving a parameter from the response body.
      *
-     * @param  array $data
-     * @return \Bitstamp\Api\HttpResponse
+     * @param  array $body
+     * @param  string $name
+     * @throws \RuntimeException
+     * @return mixed
      */
-    protected function get(array $data = [])
+    protected static function getResponseParam(array $body, $name)
     {
-        return $this->getClient()->get($this, $data);
-    }
+        if ( ! array_key_exists($name, $body)) {
+            throw new \RuntimeException("Missing required response param: {$name}");
+        }
 
-    /**
-     * Shorthand method for executing a POST request on the client.
-     *
-     * @param  array $data
-     * @return \Bitstamp\Api\HttpResponse
-     */
-    protected function post(array $data = [])
-    {
-        return $this->getClient()->post($this, $data);
+        return $body[$name];
     }
 
 }

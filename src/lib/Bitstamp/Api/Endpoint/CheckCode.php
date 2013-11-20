@@ -1,21 +1,9 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class CheckCode extends \Bitstamp\Api\EndpointAbstract
+class CheckCode extends \Bitstamp\Api\Endpoint\CodeAbstract
 {
 
     const URI = "/check_code/";
-
-    /**
-     * @see \Bitstamp\Api\EndpointAbstract::execute()
-     */
-    public function execute($code = null)
-    {
-        $data = [
-	        "code" => $code
-        ];
-
-        return $this->post($data)->getBody();
-    }
 
 }

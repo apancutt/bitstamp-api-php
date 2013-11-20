@@ -19,7 +19,8 @@ class Transactions extends \Bitstamp\Api\EndpointAbstract
 	        "time" => $time
         ];
 
-        return $this->get($data)->getBody();
+        // TODO: create property for list of transations [date, tid, price, amount]
+        return $this->getClient()->get($this, $data)->getBody();
     }
 
 }

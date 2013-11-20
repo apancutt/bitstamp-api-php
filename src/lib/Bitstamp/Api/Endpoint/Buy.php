@@ -1,5 +1,5 @@
 <?php
-namespace Bitstamp\Api\Endpoint\LimitOrder;
+namespace Bitstamp\Api\Endpoint;
 
 class Buy extends \Bitstamp\Api\Endpoint\LimitOrderAbstract
 {

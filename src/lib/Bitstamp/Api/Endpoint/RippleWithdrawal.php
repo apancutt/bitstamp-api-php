@@ -17,7 +17,7 @@ class BitcoinWithdrawal extends \Bitstamp\Api\EndpointAbstract
 	        "currency" => $currency
         ];
 
-        return $this->post($data)->getBody();
+        return ($this->getClient()->post($this, $data)->getBody() === true);
     }
 
 }

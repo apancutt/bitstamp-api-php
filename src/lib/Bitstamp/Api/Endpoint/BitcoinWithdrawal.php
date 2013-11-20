@@ -16,7 +16,7 @@ class BitcoinWithdrawal extends \Bitstamp\Api\EndpointAbstract
 	        "address" => $address
         ];
 
-        return $this->post($data)->getBody();
+        return ($this->getClient()->post($this, $data)->getBody() === true);
     }
 
 }

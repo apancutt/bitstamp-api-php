@@ -11,7 +11,7 @@ class BitcoinDepositAddress extends \Bitstamp\Api\EndpointAbstract
      */
     public function execute()
     {
-        return $this->post()->getBody();
+        return $this->getClient()->post($this)->getBody();
     }
 
 }

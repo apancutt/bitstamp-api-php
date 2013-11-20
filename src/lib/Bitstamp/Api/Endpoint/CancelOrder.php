@@ -15,7 +15,7 @@ class CancelOrder extends \Bitstamp\Api\EndpointAbstract
 	        "id" => $id
         ];
 
-        return $this->post($data)->getBody();
+        return ($this->getClient()->post($this, $data)->getBody() === true);
     }
 
 }

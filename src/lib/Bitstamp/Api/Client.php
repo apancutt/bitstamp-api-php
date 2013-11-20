@@ -175,7 +175,7 @@ class Client
      * Executes an HTTP GET request on an API endpoint.
      *
      * @param  \Bitstamp\Api\EndpointAbstract $endpoint
-     * @param  array $data
+     * @param  array    $data
      * @return \Bitstamp\Api\HttpResponse
      */
     public function get(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
@@ -189,7 +189,7 @@ class Client
      * Executes an HTTP POST request on an API endpoint. Authentication parameters are required for all POST requests.
      *
      * @param  \Bitstamp\Api\EndpointAbstract $endpoint
-     * @param  array $data
+     * @param  array   $data
      * @return \Bitstamp\Api\HttpResponse
      */
     public function post(\Bitstamp\Api\EndpointAbstract $endpoint, array $data = [])
