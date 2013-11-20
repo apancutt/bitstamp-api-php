@@ -4,7 +4,7 @@ namespace Bitstamp\Api;
 class Client
 {
 
-    private $logger;
+    private $request;
     private $client_id;
     private $api_secret;
     private $api_key;
@@ -13,61 +13,59 @@ class Client
     const ENDPOINT_BASE_URI = "https://www.bitstamp.net/api";
 
     /**
-     * @param string                        $client_id
-     * @param string                        $api_secret
-     * @param string                        $api_key
-     * @param \Bitstamp\Api\LoggerInterface $logger
+     * @param \Panadas\Module\HttpClient\Request $request
+     * @param string                             $client_id
+     * @param string                             $api_secret
+     * @param string                             $api_key
      */
-    public function __construct($client_id, $api_secret, $api_key, \Bitstamp\Api\LoggerInterface $logger = null)
+    public function __construct(
+        \Panadas\Module\HttpClient\Request $request,
+        $client_id,
+        $api_secret,
+        $api_key
+    )
     {
         $this
+            ->setRequest($request)
             ->setClientId($client_id)
             ->setApiSecret($api_secret)
             ->setApiKey($api_key);
 
-        if (null !== $logger) {
-            $this->setLogger($logger);
+        $logger = $request->getLogger();
 
-            $logger->debug("Bitstamp client has been configured:");
-            $logger->debug("     Client ID: {$this->getClientId()}");
-            $logger->debug("     API Secret: <hidden>");
-            $logger->debug("     API Key: {$this->getApiKey()}");
+        if (null !== $logger) {
+            $logger
+                ->debug("Bitstamp client has been configured:")
+                ->debug("     Client ID: {$this->getClientId()}")
+                ->debug("     API Secret: <hidden>")
+                ->debug("     API Key: {$this->getApiKey()}");
         }
     }
 
     /**
-     * @return \Bitstamp\Api\LoggerInterface
+     * @return \Panadas\Module\HttpClient\Request
      */
-    public function getLogger()
+    public function getRequest()
     {
-        return $this->logger;
+        return $this->request;
     }
 
     /**
-     * @return boolean
-     */
-    public function hasLogger()
-    {
-        return (null !== $this->getLogger());
-    }
-
-    /**
-     * @param  \Bitstamp\Api\LoggerInterface $logger
+     * @param  \Panadas\Module\HttpClient\Request $request
      * @return \Bitstamp\Api\Client
      */
-    protected function setLogger(\Bitstamp\Api\LoggerInterface $logger = null)
+    protected function setRequest(\Panadas\Module\HttpClient\Request $request)
     {
-        $this->logger = $logger;
+        $request->setOption(
+            CURLOPT_USERAGENT,
+            sprintf(
+                "Mozilla/4.0 (compatible; BtcTrader/%s; %s; PHP/%s)", static::VERSION, php_uname("s"), phpversion()
+            )
+        );
+
+        $this->request = $request;
 
         return $this;
-    }
-
-    /**
-     * @return \Bitstamp\Api\Client
-     */
-    protected function removeLogger()
-    {
-        return $this->setLogger(null);
     }
 
     /**
@@ -165,21 +163,13 @@ class Client
             }
         }
 
-        $options = [
-            CURLOPT_USERAGENT => sprintf(
-                "Mozilla/4.0 (compatible; BtcTrader/%s; %s; PHP/%s)", static::VERSION, php_uname("s"), phpversion()
-            )
-        ];
+        $response = $this->getRequest()->send($method, $uri, $data, [], $options);
 
-        $http_request = new \Bitstamp\Api\HttpRequest($this->getLogger());
-
-        $http_response = $http_request->send($method, $uri, $data, [], $options);
-
-        if ($http_response->isError()) {
-            throw new \RuntimeException("HTTP error status received: {$http_response->getStatusCode()}");
+        if ($response->isError()) {
+            throw new \RuntimeException("HTTP error status received: {$response->getStatusCode()}");
         }
 
-        return $http_response;
+        return $response;
     }
 
     /**
