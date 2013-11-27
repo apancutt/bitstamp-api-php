@@ -47,7 +47,7 @@ abstract class EndpointAbstract
      *
      * @return mixed
      */
-    protected function execute()
+    public function execute()
     {
         return $this->request()->getBody();
     }
