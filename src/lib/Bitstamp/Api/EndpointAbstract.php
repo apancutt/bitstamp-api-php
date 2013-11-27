@@ -9,11 +9,11 @@ abstract class EndpointAbstract
     const URI = null; // The URI must be configured by the endpoint
 
     /**
-     * Execute the endpoint and handles the response. The returned value depends on the implementation of the endpoint.
+     * Executes a request to the endpoint and returns the response.
      *
-     * @return mixed
+     * @return \Panadas\Module\HttpClient\Response
      */
-    public abstract function execute();
+    protected abstract function request(array $data = []);
 
     /**
      * @param \Bitstamp\Api\Client $client
@@ -43,20 +43,13 @@ abstract class EndpointAbstract
     }
 
     /**
-     * Shorthand method for retrieving a parameter from the response body.
+     * Default implementation for performing a request on the endpoint and returning the response body.
      *
-     * @param  array $body
-     * @param  string $name
-     * @throws \RuntimeException
      * @return mixed
      */
-    protected static function getResponseParam(array $body, $name)
+    protected function execute()
     {
-        if ( ! array_key_exists($name, $body)) {
-            throw new \RuntimeException("Missing required response param: {$name}");
-        }
-
-        return $body[$name];
+        return $this->request()->getBody();
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class BitcoinWithdrawal extends \Bitstamp\Api\EndpointAbstract
+class BitcoinWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
 {
 
     const URI = "/bitcoin_withdrawal/";
@@ -16,7 +16,7 @@ class BitcoinWithdrawal extends \Bitstamp\Api\EndpointAbstract
 	        "address" => $address
         ];
 
-        return ($this->getClient()->post($this, $data)->getBody() === true);
+        return $this->request($data)->getBody();
     }
 
 }

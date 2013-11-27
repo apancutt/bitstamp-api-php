@@ -1,7 +1,7 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class BitcoinWithdrawal extends \Bitstamp\Api\EndpointAbstract
+class BitcoinWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
 {
 
     const URI = "/ripple_withdrawal/";
@@ -17,7 +17,7 @@ class BitcoinWithdrawal extends \Bitstamp\Api\EndpointAbstract
 	        "currency" => $currency
         ];
 
-        return ($this->getClient()->post($this, $data)->getBody() === true);
+        return $this->request($data)->getBody();
     }
 
 }

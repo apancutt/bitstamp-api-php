@@ -1,7 +1,7 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class UserTransactions extends \Bitstamp\Api\EndpointAbstract
+class UserTransactions extends \Bitstamp\Api\PostEndpointAbstract
 {
 
     const URI = "/user_transactions/";
@@ -21,8 +21,7 @@ class UserTransactions extends \Bitstamp\Api\EndpointAbstract
 	        "sort" => $sort
         ];
 
-        // TODO: create property for list of transations [datetime, id, type, usd, btc, fee, order_id]
-        return $this->getClient()->post($this, $data)->getBody();
+        return $this->request($data)->getBody();
     }
 
 }

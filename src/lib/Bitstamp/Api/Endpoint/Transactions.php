@@ -1,7 +1,7 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class Transactions extends \Bitstamp\Api\EndpointAbstract
+class Transactions extends \Bitstamp\Api\GetEndpointAbstract
 {
 
     const URI = "/transactions/";
@@ -19,8 +19,7 @@ class Transactions extends \Bitstamp\Api\EndpointAbstract
 	        "time" => $time
         ];
 
-        // TODO: create property for list of transations [date, tid, price, amount]
-        return $this->getClient()->get($this, $data)->getBody();
+        return $this->request($data)->getBody();
     }
 
 }

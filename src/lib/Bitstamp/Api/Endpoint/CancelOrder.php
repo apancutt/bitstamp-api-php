@@ -1,7 +1,7 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class CancelOrder extends \Bitstamp\Api\EndpointAbstract
+class CancelOrder extends \Bitstamp\Api\PostEndpointAbstract
 {
 
     const URI = "/cancel_order/";
@@ -15,7 +15,7 @@ class CancelOrder extends \Bitstamp\Api\EndpointAbstract
 	        "id" => $id
         ];
 
-        return ($this->getClient()->post($this, $data)->getBody() === true);
+        return $this->request($data)->getBody();
     }
 
 }

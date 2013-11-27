@@ -1,17 +1,9 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class BitcoinDepositAddress extends \Bitstamp\Api\EndpointAbstract
+class BitcoinDepositAddress extends \Bitstamp\Api\PostEndpointAbstract
 {
 
     const URI = "/bitcoin_deposit_address/";
-
-    /**
-     * @see \Bitstamp\Api\EndpointAbstract::execute()
-     */
-    public function execute()
-    {
-        return $this->getClient()->post($this)->getBody();
-    }
 
 }
