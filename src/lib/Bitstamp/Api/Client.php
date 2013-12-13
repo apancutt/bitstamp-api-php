@@ -168,6 +168,25 @@ class Client
             throw new \RuntimeException("HTTP error status received: {$response->getStatusCode()}");
         }
 
+        $body = $response->getBody();
+
+        if (is_array($body) && array_key_exists("error", $body)) {
+
+            $errors = [];
+
+            foreach ($body["error"] as $field => $messages) {
+
+                $messages = implode(", ", $messages);
+                $errors[] = "[{$field}] {$messages}";
+
+            }
+
+            $errors = implode(" ", $errors);
+
+            throw new \RuntimeException("API error: {$errors}");
+
+        }
+
         return $response;
     }
 
