@@ -59,12 +59,13 @@ Example Usage
 
         $client = new \Bitstamp\Api\Client($request, $client_id, $api_secret, $api_key);
 
-        // Display your account balance
-        print_r((new \Bitstamp\Api\Endpoint\Balance($client))->execute());
+        $balance = new \Bitstamp\Api\Endpoint\Balance($client))->execute();
+
+        echo "You have {$balance->getBtcBalance()}BTC in your account\n";
 
     } catch (\Exception $exception) {
 
-        $logger->error($exception->getMessage());
+        echo "{$exception->getMessage()} in {$exception->getFile()}:{$exception->getLine()}\n";
         exit(1);
 
     }
