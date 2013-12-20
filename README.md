@@ -39,7 +39,7 @@ Example Usage
     require_once __DIR__ . "/../vendor/autoload.php";
 
     // The HTTP request client, provided by panadas/module-httpclient
-    $request = new \Panadas\Module\HttpClient\Request($logger);
+    $request = new \Panadas\Module\HttpClient\Request();
 
     /*
     // Alternatively, you can provide an instance of Panadas\Module\LoggerAbstract for log messages
