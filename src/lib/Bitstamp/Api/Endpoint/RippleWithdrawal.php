@@ -1,13 +1,16 @@
 <?php
 namespace Bitstamp\Api\Endpoint;
 
-class BitcoinWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
+class RippleWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
 {
 
     const URI = "/ripple_withdrawal/";
 
     /**
-     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     * @param  float  $amount
+     * @param  string $address
+     * @param  string $currency
+     * @return boolean
      */
     public function execute($amount = null, $address = null, $currency = null)
     {
@@ -17,7 +20,7 @@ class BitcoinWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
 	        "currency" => $currency
         ];
 
-        return $this->request($data)->getBody();
+        return $this->cast($this->request($data)->getBody());
     }
 
 }

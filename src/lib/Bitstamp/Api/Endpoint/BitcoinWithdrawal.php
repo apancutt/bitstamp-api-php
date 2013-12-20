@@ -7,7 +7,9 @@ class BitcoinWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
     const URI = "/bitcoin_withdrawal/";
 
     /**
-     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     * @param  float  $amount
+     * @param  string $address
+     * @return boolean
      */
     public function execute($amount = null, $address = null)
     {
@@ -16,7 +18,7 @@ class BitcoinWithdrawal extends \Bitstamp\Api\PostEndpointAbstract
 	        "address" => $address
         ];
 
-        return $this->request($data)->getBody();
+        return $this->cast($this->request($data)->getBody());
     }
 
 }

@@ -11,7 +11,8 @@ class Transactions extends \Bitstamp\Api\GetEndpointAbstract
     const TIME_DEFAULT = self::TIME_HOUR;
 
     /**
-     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     * @param  string $time
+     * @return array
      */
     public function execute($time = self::TIME_DEFAULT)
     {
@@ -19,7 +20,26 @@ class Transactions extends \Bitstamp\Api\GetEndpointAbstract
 	        "time" => $time
         ];
 
-        return $this->request($data)->getBody();
+        return $this->cast($this->request($data)->getBody());
+    }
+
+    /**
+     * @param  array $body
+     * @return array
+     */
+    protected function cast($body)
+    {
+        $transactions = [];
+
+        foreach ($body as $transaction) {
+            $transactions[] = (new \Bitstamp\Api\Model\Transaction($this->getClient()))
+                ->setId($transaction["tid"])
+                ->setDateTime(\DateTime::createFromFormat("U", $transaction["date"], new \DateTimeZone("UTC")))
+                ->setPrice($transaction["price"])
+                ->setAmount($transaction["amount"]);
+        }
+
+        return $transactions;
     }
 
 }

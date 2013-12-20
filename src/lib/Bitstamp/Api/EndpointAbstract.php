@@ -9,8 +9,9 @@ abstract class EndpointAbstract
     const URI = null; // The URI must be configured by the endpoint
 
     /**
-     * Executes a request to the endpoint and returns the response.
+     * Creates and sends an HTTP request to the endpoint and returns the response object.
      *
+     * @param  array $data
      * @return \Panadas\Module\HttpClient\Response
      */
     protected abstract function request(array $data = []);
@@ -43,13 +44,24 @@ abstract class EndpointAbstract
     }
 
     /**
-     * Default implementation for performing a request on the endpoint and returning the response body.
+     * Executes a request to the endpoint and returns a PHP type repesenting the response.
      *
      * @return mixed
      */
     public function execute()
     {
-        return $this->request()->getBody();
+        return $this->cast($this->request()->getBody());
+    }
+
+    /**
+     * Convert the raw body into a PHP type.
+     *
+     * @param  mixed $body
+     * @return mixed
+     */
+    protected function cast($body)
+    {
+        return $body;
     }
 
 }

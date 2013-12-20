@@ -172,18 +172,26 @@ class Client
 
         if (is_array($body) && array_key_exists("error", $body)) {
 
-            $errors = [];
+            if (is_array($body["error"])) {
 
-            foreach ($body["error"] as $field => $messages) {
+                $error = [];
 
-                $messages = implode(", ", $messages);
-                $errors[] = "[{$field}] {$messages}";
+                foreach ($body["error"] as $field => $messages) {
+
+                    $messages = implode(", ", $messages);
+                    $error[] = "[{$field}] {$messages}";
+
+                }
+
+                $error = implode(" ", $error);
+
+            } else {
+
+                $error = $body["error"];
 
             }
 
-            $errors = implode(" ", $errors);
-
-            throw new \RuntimeException("API error: {$errors}");
+            throw new \RuntimeException("API error: {$error}");
 
         }
 

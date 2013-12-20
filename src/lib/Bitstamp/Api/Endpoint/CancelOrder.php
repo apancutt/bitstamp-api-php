@@ -7,7 +7,8 @@ class CancelOrder extends \Bitstamp\Api\PostEndpointAbstract
     const URI = "/cancel_order/";
 
     /**
-     * @see \Bitstamp\Api\EndpointAbstract::execute()
+     * @param  integer $id
+     * @return boolean
      */
     public function execute($id = null)
     {
@@ -15,7 +16,7 @@ class CancelOrder extends \Bitstamp\Api\PostEndpointAbstract
 	        "id" => $id
         ];
 
-        return $this->request($data)->getBody();
+        return $this->cast($this->request($data)->getBody());
     }
 
 }
