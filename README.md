@@ -70,4 +70,9 @@ Example Usage
 
     }
 
-More information can be found at: https://www.bitstamp.net/api/
+More information regarding the available endpoints can be found at: https://www.bitstamp.net/api/
+
+Donations
+---------
+
+If you would like to support this project, you are welcome to send a donation to 1JmwNFgunTpR534Gukv1aA95jXTxf6vKKo - your support and generosity is greatly appreciated.
