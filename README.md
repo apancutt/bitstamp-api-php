@@ -75,4 +75,4 @@ More information regarding the available endpoints can be found at: https://www.
 Donations
 ---------
 
-If you would like to support this project, you are welcome to send a donation to 1JmwNFgunTpR534Gukv1aA95jXTxf6vKKo - your support and generosity is greatly appreciated.
+If you would like to support this project, you are welcome to send a donation to 3Q4YPjpz7qbhaewdfCzHbry1v47wX5pWiX - your support and generosity is greatly appreciated.
